@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+/* TAILWIND V4 DE SHRIFTLARNI SHUNDAY RO'YXATDAN O'TKAZAMIZ */
+@theme {
+  --font-shirin: "Fredoka", sans-serif;
+  --font-asosiy: "Quicksand", sans-serif;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-asosiy);
+    background-color: var(--color-stone-50);
+    color: var(--color-stone-800);
+  }
+}
