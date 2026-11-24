@@ -65,7 +65,7 @@ export default function Navbar({ savatSoni }) {
               }`
             }
           >
-            <ShoppingBag size={16} className="sm:w-4,5 sm:h-4,5" />
+            <ShoppingBag size={16} className="sm:w-4.5 sm:h-4.5" />
             <span>Savatcham</span>
             {savatSoni > 0 && (
               <span className="absolute -top-1.5 -right-1.5 bg-linear-to-r from-rose-500 to-pink-500 text-white text-[10px] sm:text-[11px] font-bold w-4.5 h-4.5 sm:w-5 sm:h-5 rounded-full flex items-center justify-center shadow-sm">

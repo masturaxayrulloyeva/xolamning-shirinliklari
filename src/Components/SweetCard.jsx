@@ -42,7 +42,9 @@ const ReytingYulduzlari = ({ reyting }) => {
 
 // --- Asosiy Card komponenti ---
 export default function SweetCard({ shirinlik, onSavatgaQoshish }) {
-  const { nomi, kategoriya, narxi, reyting, tarif, rasm } = shirinlik;
+  const { nomi, kategoriya, narxi, rasm } = shirinlik;
+  const reyting = shirinlik.reyting ?? shirinlik.baho ?? 5.0;
+  const tarif = shirinlik.tarif || "Eng sarxil va tabiiy masalliqlardan tayyorlangan shirinlik.";
 
   return (
     <article className="group relative flex flex-col bg-white rounded-3xl overflow-hidden shadow-md shadow-pink-100/60 border border-pink-100 transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl hover:shadow-pink-200/50 max-w-sm w-full">

@@ -47,7 +47,7 @@ export default function Home() {
 
         {/* Bannerning o'ng tarafidagi jozibador rasm */}
         <div className="relative justify-self-center md:justify-self-end">
-          <div className="absolute inset-0 bg-inear-to-tr from-rose-200 to-pink-100 rounded-full filter blur-3xl opacity-40 -z-10 transform scale-110"></div>
+          <div className="absolute inset-0 bg-linear-to-tr from-rose-200 to-pink-100 rounded-full filter blur-3xl opacity-40 -z-10 transform scale-110"></div>
           <img
             src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80"
             alt="Asosiy shirinlik"

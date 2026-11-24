@@ -1,39 +1,76 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Components/Navbar";
+import { CheckCircle2, AlertCircle, X } from "lucide-react";
 
 export default function Layout() {
   const [savat, setSavat] = useState([]);
+  const [toast, setToast] = useState({ ochik: false, xabar: "", tur: "success" });
 
+  // Zamonaviy Toastify xabarnomasi funksiyasi
+  const toastKorsatish = (xabar, tur = "success") => {
+    setToast({ ochik: true, xabar, tur });
+    setTimeout(() => {
+      setToast((prev) => ({ ...prev, ochik: false }));
+    }, 2800);
+  };
+
+  // Savatga qo'shish (alert o'rniga chiroyli toast bilan)
   const savatgaQoshish = (shirinlik) => {
     setSavat((prevSavat) => {
       const mavjudmi = prevSavat.some((item) => item.id === shirinlik.id);
       if (mavjudmi) {
-        alert(`"${shirinlik.nomi}" allaqachon savatda bor!`);
+        toastKorsatish(`"${shirinlik.nomi}" allaqachon savatda bor!`, "warning");
         return prevSavat;
       }
-      alert(`✅ "${shirinlik.nomi}" savatga qo'shildi!`);
+      toastKorsatish(`"${shirinlik.nomi}" savatga qo'shildi! 🧁`, "success");
       return [...prevSavat, shirinlik];
     });
   };
 
-  // YANGI QO'SHILGAN O'CHIRISH FUNKSIYASI:
+  // Savatdan o'chirish
   const savatdanOchirish = (id) => {
     setSavat((prevSavat) => prevSavat.filter((item) => item.id !== id));
+    toastKorsatish("Mahsulot savatdan olib tashlandi", "warning");
   };
 
-  // 🔥 MANA BU YANGI FUNKSIYANI QO'SHING:
+  // Savatni butunlay tozalash
   const savatniTozalash = () => {
-    setSavat([]); // Massivni butunlay bo'shatadi
+    setSavat([]);
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-800 flex flex-col">
+    <div className="min-h-screen bg-stone-50 text-stone-800 flex flex-col relative">
       <Navbar savatSoni={savat.length} />
 
+      {/* ================= ZAMONAVIY TOASTIFY (ESKI ALERT O'RNIGA) ================= */}
+      {toast.ochik && (
+        <div className="fixed top-20 right-4 sm:right-6 z-50 animate-bounce transition-all duration-300">
+          <div
+            className={`flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-xl border backdrop-blur-md transition-all ${
+              toast.tur === "success"
+                ? "bg-white/95 border-emerald-200 text-emerald-800 shadow-emerald-100/60"
+                : "bg-white/95 border-amber-200 text-amber-800 shadow-amber-100/60"
+            }`}
+          >
+            {toast.tur === "success" ? (
+              <CheckCircle2 size={20} className="text-emerald-500 shrink-0" />
+            ) : (
+              <AlertCircle size={20} className="text-amber-500 shrink-0" />
+            )}
+            <p className="text-xs sm:text-sm font-bold">{toast.xabar}</p>
+            <button
+              onClick={() => setToast((prev) => ({ ...prev, ochik: false }))}
+              className="text-stone-400 hover:text-stone-600 ml-2 cursor-pointer"
+            >
+              <X size={15} />
+            </button>
+          </div>
+        </div>
+      )}
+
       <main className="flex-1">
-        {/* Endi o'chirish funksiyasini ham context orqali pastga uzatamiz */}
-        <Outlet context={{ savatgaQoshish, savat, savatdanOchirish, savatniTozalash }} />
+        <Outlet context={{ savatgaQoshish, savat, savatdanOchirish, savatniTozalash, toastKorsatish }} />
       </main>
 
       <footer className="bg-white border-t border-stone-100 mt-auto">
@@ -61,7 +98,7 @@ export default function Layout() {
             <h5 className="font-bold text-stone-700 text-base">Bizni kuzating</h5>
             <div className="flex gap-4 mt-1">
               <a
-                href="https://t.me/html_css_js_club" // O'zingizning kanalingiz linki
+                href="https://t.me/html_css_js_club"
                 target="_blank"
                 rel="noreferrer"
                 className="text-sm bg-stone-50 hover:bg-rose-50 hover:text-rose-500 text-stone-500 px-4 py-2 rounded-xl border border-stone-100 transition-all font-medium"
